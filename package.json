@@ -1,0 +1,23 @@
+{
+  "name": "jiseliciousjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "jiselBot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/entro-afk/jiseliciousJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/entro-afk/jiseliciousJS/issues"
+  },
+  "homepage": "https://github.com/entro-afk/jiseliciousJS#readme",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "discord.js": "^12.3.1"
+  }
+}

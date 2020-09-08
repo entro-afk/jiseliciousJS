@@ -57,6 +57,7 @@ module.exports = {
                                                         function sendQuestion(question, applicationMessage) {
                                                             if (questions.length) {
                                                                 applicationEmbed.fields.push({ name: question, value: '\u200b', inline: true})
+                                                                let saveMsg = applicationMessage;
                                                                 return (applicationMessage? applicationMessage.delete({timeout:1000}) : Promise.resolve(null))
                                                                     .then(function pushNewMessage(result) {
                                                                         return message.author.send({embed: applicationEmbed})
@@ -72,6 +73,13 @@ module.exports = {
                                                                                             return 'cancel'
                                                                                         })
                                                                                 }
+                                                                                if (answer.length > 1024) {
+                                                                                    return message.author.send({embed: {title: 'Character Limit Exceeded', description: 'Please answer the questions in 1024 characters or less'}})
+                                                                                        .then(function restartQuestion(){
+                                                                                            applicationEmbed.fields.pop();
+                                                                                            return sendQuestion(question, null)
+                                                                                        })
+                                                                                }
                                                                                 applicationEmbed.fields[applicationEmbed.fields.length-1].value = answer;
                                                                                 return recentMsg.delete({timeout:1000})
                                                                                     .then(function sendUpdate(){
@@ -79,18 +87,18 @@ module.exports = {
                                                                                     })
                                                                             })
                                                                             .catch((err) => {
-                                                                                message.author.send(err);
+                                                                                return message.author.send(err);
                                                                             });
                                                                         })
                                                                     })
 
                                                             }
                                                         }
-                                                        questions.cancelled = false;
                                                         return Promise.each(questions, function (question) {
                                                             if (!questions.cancelled) {
                                                                 return sendQuestion(question, previousMessage)
                                                                     .then(function setPrevMsg(newMsg){
+                                                                        questions.cancelled = false;
                                                                         if (newMsg === 'cancel') {
                                                                             questions.cancelled = true
                                                                         }

@@ -17,8 +17,9 @@ module.exports = {
 
                     return message.author.send({embed: applicationEmbed})
                         .then(function sendReady(appMsg) {
-                            const yesEmoji = message.channel.guild.emojis.cache.find(emoji => emoji.name === 'yes');
-                            const cancelEmoji = message.channel.guild.emojis.cache.find(emoji => emoji.name === 'no');
+                            console.log('yest')
+                            const yesEmoji = appMsg.author.client.emojis.cache.find(emoji => emoji.name === 'yes');
+                            const cancelEmoji = appMsg.author.client.emojis.cache.find(emoji => emoji.name === 'no');
                             let readyAppEmbed = new Discord.MessageEmbed()
                                 .setColor('#0099ff')
                                 .setTitle(`Ready?`)
